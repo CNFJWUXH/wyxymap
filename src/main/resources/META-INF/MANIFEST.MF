@@ -1,0 +1,46 @@
+Manifest-Version: 1.0
+Class-Path: lib\shiro-spring-1.3.2.jar lib\validation-api-2.0.1.Final.
+ jar lib\spring-tx-5.0.7.RELEASE.jar lib\netty-codec-4.1.25.Final.jar 
+ lib\hibernate-validator-6.0.10.Final.jar lib\aspectjweaver-1.8.13.jar
+  lib\spring-boot-autoconfigure-2.0.3.RELEASE.jar lib\thymeleaf-spring
+ 5-3.0.9.RELEASE.jar lib\tomcat-embed-websocket-8.5.31.jar lib\netty-c
+ ommon-4.1.25.Final.jar lib\snakeyaml-1.19.jar lib\lombok-1.16.22.jar 
+ lib\spring-data-keyvalue-2.0.8.RELEASE.jar lib\netty-buffer-4.1.25.Fi
+ nal.jar lib\spring-boot-starter-2.0.3.RELEASE.jar lib\log4j-to-slf4j-
+ 2.10.0.jar lib\spring-boot-starter-aop-2.0.3.RELEASE.jar lib\HikariCP
+ -2.7.9.jar lib\thymeleaf-3.0.9.RELEASE.jar lib\tomcat-embed-el-8.5.31
+ .jar lib\jboss-logging-3.3.2.Final.jar lib\spring-boot-starter-jdbc-2
+ .0.3.RELEASE.jar lib\spring-boot-starter-data-redis-2.0.3.RELEASE.jar
+  lib\shiro-web-1.3.2.jar lib\jackson-annotations-2.9.0.jar lib\hibern
+ ate-core-5.2.17.Final.jar lib\jackson-datatype-jsr310-2.9.6.jar lib\j
+ ul-to-slf4j-1.7.25.jar lib\antlr-2.7.7.jar lib\spring-boot-2.0.3.RELE
+ ASE.jar lib\commons-beanutils-1.8.3.jar lib\hibernate-jpa-2.1-api-1.0
+ .2.Final.jar lib\spring-data-redis-2.0.8.RELEASE.jar lib\reactor-core
+ -3.1.8.RELEASE.jar lib\spring-boot-starter-thymeleaf-2.0.3.RELEASE.ja
+ r lib\spring-jcl-5.0.7.RELEASE.jar lib\slf4j-api-1.7.25.jar lib\sprin
+ g-beans-5.0.7.RELEASE.jar lib\jackson-core-2.9.6.jar lib\javax.annota
+ tion-api-1.3.2.jar lib\jackson-module-parameter-names-2.9.6.jar lib\s
+ hiro-core-1.3.2.jar lib\spring-aop-5.0.7.RELEASE.jar lib\spring-expre
+ ssion-5.0.7.RELEASE.jar lib\jandex-2.0.3.Final.jar lib\jackson-databi
+ nd-2.9.6.jar lib\lettuce-core-5.0.4.RELEASE.jar lib\tomcat-embed-core
+ -8.5.31.jar lib\spring-orm-5.0.7.RELEASE.jar lib\logback-classic-1.2.
+ 3.jar lib\logback-core-1.2.3.jar lib\spring-boot-starter-json-2.0.3.R
+ ELEASE.jar lib\attoparser-2.0.4.RELEASE.jar lib\spring-data-commons-2
+ .0.8.RELEASE.jar lib\spring-webmvc-5.0.7.RELEASE.jar lib\jackson-data
+ type-jdk8-2.9.6.jar lib\netty-handler-4.1.25.Final.jar lib\spring-boo
+ t-devtools-2.0.3.RELEASE.jar lib\spring-context-5.0.7.RELEASE.jar lib
+ \javassist-3.22.0-GA.jar lib\spring-data-jpa-2.0.8.RELEASE.jar lib\do
+ m4j-1.6.1.jar lib\spring-web-5.0.7.RELEASE.jar lib\spring-boot-starte
+ r-logging-2.0.3.RELEASE.jar lib\spring-boot-starter-data-jpa-2.0.3.RE
+ LEASE.jar lib\spring-boot-starter-web-2.0.3.RELEASE.jar lib\spring-co
+ re-5.0.7.RELEASE.jar lib\commons-lang3-3.7.jar lib\hibernate-commons-
+ annotations-5.0.1.Final.jar lib\netty-resolver-4.1.25.Final.jar lib\n
+ etty-transport-4.1.25.Final.jar lib\reactive-streams-1.0.2.jar lib\my
+ sql-connector-java-5.1.46.jar lib\spring-oxm-5.0.7.RELEASE.jar lib\sp
+ ring-boot-starter-tomcat-2.0.3.RELEASE.jar lib\thymeleaf-extras-java8
+ time-3.0.1.RELEASE.jar lib\unbescape-1.1.5.RELEASE.jar lib\spring-asp
+ ects-5.0.7.RELEASE.jar lib\classmate-1.3.4.jar lib\spring-jdbc-5.0.7.
+ RELEASE.jar lib\javax.transaction-api-1.2.jar lib\log4j-api-2.10.0.ja
+ r lib\spring-context-support-5.0.7.RELEASE.jar
+Main-Class: com.wuxh.wyxymap.WyxymapApplication
+

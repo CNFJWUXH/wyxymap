@@ -1,0 +1,9 @@
+#selectPlaceUl li{
+    list-style-type:none;
+    display:inline;
+    line-height:24px;
+    height:auto;
+    word-break:break-all;
+    word-wrap:break-word ;
+    margin-left: 10px;
+}

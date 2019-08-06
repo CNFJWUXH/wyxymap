@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Input</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=""/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
+    <!-- Custom CSS -->
+    <link href="../css/style.css" rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="../admin/css/morris.css" type="text/css"/>
+    <!-- Graph CSS -->
+    <link href="../css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="../js/jquery-2.1.4.min.js"></script>
+    <!-- //jQuery -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet'
+          type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="../css/icon-font.min.css" type='text/css'/>
+    <!-- //lined-icons -->
+
+    <style type="text/css">
+        table.hovertable {
+            font-family: verdana,arial,sans-serif;
+            font-size:11px;
+            color:#333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+        }
+        table.hovertable th {
+            background-color:#c3dde0;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #a9c6c9;
+        }
+        table.hovertable tr {
+            background-color:#d4e3e5;
+        }
+        table.hovertable td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #a9c6c9;
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <!--/content-inner-->
+    <div class="left-content">
+        <div class="mother-grid-inner">
+            <!--header start here-->
+            <div class="header-main">
+                <div class="logo-w3-agile">
+                    <h1><a href="index">Index</a></h1>
+                </div>
+                <div class="clearfix"></div>
+                <div>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="../admin/index">Home</a> <i class="fa fa-angle-right"></i></li>
+                        <li style="float: right"><a href="loginout">Login out</a></li>
+                    </ol>
+                </div>
+
+            </div>
+            <!--heder end here-->
+
+            <!--grid-->
+            <div class="grid-form">
+                <div class="grid-form1">
+                    <h2 id="forms-example" class="">添加地标</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   placeholder="Email address">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1"
+                                   placeholder="Password">
+                        </div>
+
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Check me out
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-default">添加</button>
+                    </form>
+                </div>
+
+            </div>
+            <!--//grid-->
+
+            <!-- script-for sticky-nav -->
+            <script>
+                $(document).ready(function () {
+                    var navoffeset = $(".header-main").offset().top;
+                    $(window).scroll(function () {
+                        var scrollpos = $(window).scrollTop();
+                        if (scrollpos >= navoffeset) {
+                            $(".header-main").addClass("fixed");
+                        } else {
+                            $(".header-main").removeClass("fixed");
+                        }
+                    });
+
+                });
+            </script>
+            <!-- /script-for sticky-nav -->
+            <!--inner block start here-->
+            <table>
+                <form action="#" th:action="@{/admin/addPlace}" th:object="${place}" method="post">
+                    <tr>添加地标</tr>
+                    <tr><td><label>地标名称</label><input th:field="*{name}" placeholder="地标名称">  </td></tr>
+                    <tr><td><label>地标简介</label><input th:field="*{introdution}" placeholder="地标简介"> </td></tr>
+                    <tr><td><label>地标横坐标</label><input th:field="*{x}" placeholder="地标横坐标" value=""> </td></tr>
+                    <tr><td><label>地标纵坐标</label><input th:field="*{y}" placeholder="地标纵坐标" value=""> </td></tr>
+                    <tr><td><label>链接地址</label><input th:field="*{link}" placeholder="链接地址" value=""> </td></tr>
+                    <tr><td><input type="submit" value="添加"></td></tr>
+                </form>
+            </table>
+            <label th:text="*{msg}"></label><br/>
+
+
+            <table class="hovertable">
+                <thead>地标列表</thead>
+                <tr><th>序号</th> <th>地标名称</th> <th>地标简介</th> <th>地标横坐标</th> <th>地标纵坐标</th><th>链接地址</th><th>操作</th></tr>
+                <tr th:each="place,placeStat:${placeList}">
+                    <td th:text="${placeStat.index}"></td>
+                    <td th:attr="id='pTabNam'+${place.id}" th:text="${place.name}"></td>
+                    <td th:attr="id='pTabIntro'+${place.id}" th:text="${place.introdution}"></td>
+                    <td th:attr="id='pTabX'+${place.id}" th:text="${place.x}"></td>
+                    <td th:attr="id='pTabY'+${place.id}" th:text="${place.y}"></td>
+                    <td th:attr="id='pTabLink'+${place.id}" th:text="${place.link}"></td>
+                    <td><button  data-toggle="modal" data-target="#editPlaceModel" th:onclick="'javascript:editPlace('+${place.id}+')'">编辑</button>
+                        <button><a th:href="@{'/admin/deletePlace?id='+${place.id}}">删除</a></button>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="editPlaceModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">地点编辑</h4>
+                        </div>
+                        <form action="#" th:action="@{/admin/editPlace}" th:object="${place}" method="post">
+                            <div class="modal-body">
+                                <table>
+                                    <tr><td><label>地点名称</label></td><td><input id="pModNam" th:field="*{name}"><input type="hidden" id="pModId" th:field="*{id}"></td> </tr>
+                                    <tr><td><label>地点简介</label></td><td><input id="pModIntro" th:field="*{introdution}"></td> </tr>
+                                    <tr><td><label>地点横坐标</label></td><td><input id="pModX" th:field="*{x}"></td> </tr>
+                                    <tr><td><label>地点纵坐标</label></td><td><input id="pModY" th:field="*{y}"></td> </tr>
+                                    <tr><td><label>链接地址</label></td><td><input id="pModLink" th:field="*{link}"></td> </tr>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="submit" class="btn btn-primary">提交更改</button>
+                            </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            <div class="inner-block">
+
+            </div>
+            <!--inner block end here-->
+            <!--copy rights start here-->
+            <div class="copyrights">
+                <p>Copyright &copy; 2018.Company name All rights reserved. <a
+                        href="#" target="_blank" title=""></a> - Collect from <a
+                        href="#" title="" target="_blank"></a></p>
+            </div>
+            <!--COPY rights end here-->
+        </div>
+    </div>
+    <!--//content-inner-->
+    <!--/sidebar-menu-->
+    <div class="sidebar-menu">
+        <header class="logo1">
+            <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a>
+        </header>
+        <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
+        <div class="menu">
+            <ul id="menu">
+                <li><a href="../admin/place"><i class="fa fa-tachometer"></i> <span>Place</span>
+                    <div class="clearfix"></div>
+                </a></li>
+                <li><a href="../admin/place"><i class="fa fa-picture-o" aria-hidden="true"></i><span>Input</span>
+                    <div class="clearfix"></div>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script>
+    var toggle = true;
+
+    $(".sidebar-icon").click(function () {
+        if (toggle) {
+            $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+            $("#menu span").css({"position": "absolute"});
+        }
+        else {
+            $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+            setTimeout(function () {
+                $("#menu span").css({"position": "relative"});
+            }, 400);
+        }
+
+        toggle = !toggle;
+    });
+</script>
+<!--js -->
+<script src="../js/jquery.nicescroll.js"></script>
+<script src="../js/scripts.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="../js/bootstrap.min.js"></script>
+<!-- /Bootstrap Core JavaScript -->
+<script>
+    function editPlace(id) {
+        //console.info($('#pTabNam'+id).text());
+        $('#pModId').val(id);
+        $('#pModNam').val($('#pTabNam'+id).text());
+        $('#pModIntro').val($('#pTabIntro'+id).text());
+        $('#pModX').val($('#pTabX'+id).text());
+        $('#pModY').val($('#pTabY'+id).text());
+        $('#pModLink').val($('#pTabLink'+id).text());
+    }
+
+</script>
+</body>
+</html>

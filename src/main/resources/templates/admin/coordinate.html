@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coordinate</title>
+</head>
+<body>
+<div>
+    <!-- 		<input id="btn1" type="button" value="放大" onclick="ImageSuofang(true)" />
+            <input id="btn2" type="button" value="缩小" onclick="ImageSuofang(false)" /> -->
+    <label>横坐标：</label><input type="text" id="showX" readonly>
+    <label>纵坐标：</label><input type="text" id="showY" readonly>
+    <label>请点击相应地点，坐标将自动获取！</label>
+    <img id="oImg" src="../images/wyxy.jpg" alt="pic" style="transition: all 0s ease-out; transform: translate3d(0px, 0px, 0px) scale3d(0.5, 0.5, 1); cursor: default; transform-origin: 0px 0px 0px;"/>
+</div>
+<!-- jQuery Js -->
+<script src="../js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    //兼容IE和火狐   缩小放大、缩放
+    function ImageSuofang(args) {
+        var oImg = document.getElementById("oImg");
+        if (args) {
+            oImg.width = oImg.width * 1.1;
+            oImg.height = oImg.height * 1.1;
+        }
+        else {
+            oImg.width = oImg.width / 1.1;
+            oImg.height = oImg.height / 1.1;
+        }
+    }
+
+   /* $("#oImg").mousemove(function(e) {
+        var offset = $('#oImg').offset();
+        var x = e.originalEvent.x || e.originalEvent.layerX || 0;
+        var y = e.originalEvent.y || e.originalEvent.layerY || 0;
+        $(showXY).val((x - offset.left) + '---' + (y - offset.top));
+    });*/
+
+    $("#oImg").click(function (e) {
+        var offset = $('#oImg').offset();
+        var x = e.originalEvent.x || e.originalEvent.layerX || 0;
+        var y = e.originalEvent.y || e.originalEvent.layerY || 0;
+        $("#showX").val(x - offset.left);
+        $("#showY").val(y - offset.top);
+    });
+
+
+</script>
+
+</body>
+</html>

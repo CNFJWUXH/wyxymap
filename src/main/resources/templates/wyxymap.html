@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+<title>武夷学院手绘地图</title>
+<link rel="stylesheet" href="css/mapstyle.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/wyxymap.css">
+<script src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="pageContent"> 
+
+	<div id="imgContainer"> 
+    	<img id="imageFullScreen" src="images/wyxy.jpg"/>
+    </div>
+
+	<div id="positionButtonDiv">
+		<!--<p><span><a href="javascript:void(0);" onclick="selectPlaceShow()">地标搜索</a></span></p>-->
+		<p><span data-toggle="modal" data-target="#searPlaceModel" onclick="searPlaceModelShow()"><a>地标搜索</a></span></p>
+		<p><span> <img id="zoomInButton" class="zoomButton" src="images/zoomIn.png" title="zoom in" alt="zoom in" /> <img id="zoomOutButton" class="zoomButton" src="images/zoomOut.png" title="zoom out" alt="zoom out" /> </span> </p>
+		<p>
+        	<span class="positionButtonSpan">
+				<map name="positionMap" class="positionMapClass">
+					<area id="topPositionMap" shape="rect" coords="20,0,40,20" title="move up" alt="move up"/>
+	                <area id="leftPositionMap" shape="rect" coords="0,20,20,40" title="move left" alt="move left"/>
+					<area id="rightPositionMap" shape="rect" coords="40,20,60,40" title="move right" alt="move right"/>
+					<area id="bottomPositionMap" shape="rect" coords="20,40,40,60" title="move bottom" alt="move bottom"/>
+				</map>
+				<img src="images/position.png" usemap="#positionMap" />
+         	</span>
+         </p>
+	</div>
+	<!--	<div id="placeDiv" style="display:none;">
+		<ul>
+			<input id="placeStr" type="text" style="color: blue;font-size: 16px;" onkeydown="selectPlace()" onkeyup="selectPlace()">
+			<li><a onclick="to('1028243')">湖心岛湖</a></li>
+			<li><a onclick="to('549115')"> 篮球场</a></li>
+			<li><a onclick="to('692724')"> 明月湖</a></li>
+		</ul>
+	</div>-->
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="searPlaceModel" tabindex="1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">地标搜索</h4>
+				</div>
+				<div class="modal-body">
+					<input id="placeStr" placeholder="请输入地点..." type="text" style="color: blue;font-size: 16px;" onkeydown="selectPlace()" onkeyup="selectPlace()">
+					<div style="overflow: scroll">
+						<ul id="selectPlaceUl">
+							<li><a onclick="to('1028243')" data-toggle="modal" data-target="#searPlaceModel">湖心岛湖</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+</div>
+<!-- 模态框（Modal） -->
+	<div class="modal fade" id="palceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h2 class="modal-title" id="palceModalTitle">地点名称</h2>
+				</div>
+				<div class="modal-body">
+					<p id="placeContext">另据《生活报》报道，有目击者市民表示，看到狂风经过的时候，天空中有被卷得飞起来的房盖，一些电线杆上的电线不时冒出火花。龙卷风散去后，天空仍飘散着许多碎屑。当地民众表示，龙卷风在当地比较罕见。</p>
+					<p id="placeDetail">详情...</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<!-- <button type="button" class="btn btn-primary">提交更改</button> -->
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
+<script src="js/ditu.js"></script>
+<script>
+    var placeList = new Array();
+    $.ajaxSetup({async : false});
+    $.post(
+        "/getPlaceAjax",
+        {},
+        function(data) {
+            return placeList = eval(data);
+        });
+    $(document).ready(function() {        
+        $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});        
+        $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", moveButtonClickHandler);
+        $('#zoomInButton,#zoomOutButton').bind("click", zoomButtonClickHandler);
+        function zoomButtonClickHandler(e){
+            var scaleToAdd = 0.8;
+
+            if(e.target.id == 'zoomOutButton')
+                scaleToAdd = -scaleToAdd;
+            
+            $('#imageFullScreen').smartZoom('zoom', scaleToAdd);
+        }        
+
+        function moveButtonClickHandler(e){
+            var pixelsToMoveOnX = 0;
+            var pixelsToMoveOnY = 0;
+
+            switch(e.target.id){
+
+                case "leftPositionMap":
+                    pixelsToMoveOnX = 50;	
+                break;
+
+                case "rightPositionMap":
+                    pixelsToMoveOnX = -50;
+                break;
+
+                case "topPositionMap":
+                    pixelsToMoveOnY = 50;	
+                break;
+
+                case "bottomPositionMap":
+                    pixelsToMoveOnY = -50;	
+                break;
+            }
+				
+            $('#imageFullScreen').smartZoom('pan', pixelsToMoveOnX, pixelsToMoveOnY);
+        }
+    });
+
+    function setFlag(x,y,t1,t2){
+        $.post(
+            "/getPlaceAjax",
+            {},
+            function(data) {
+                return placeList = eval(data);
+            });
+    	/*var arr1 = new Array();
+    	arr1[0] = 1028;//横坐标
+    	arr1[1] = 243;//纵坐标
+    	arr1[2] = "湖心岛";//地点名
+		arr1[3] = "huxindaodejianjie!!!";//详情
+    	var arr2 = new Array();
+    	arr2[0] = 549;//横坐标
+    	arr2[1] = 115;//纵坐标
+    	arr2[2] = "篮球场";//地点名
+		arr2[3] = "篮球场的详情介绍！！！";//详情
+    	var arr3 = new Array();
+    	arr3[0] = 692;//横坐标
+    	arr3[1] = 724;//纵坐标
+    	arr3[2] = "明月湖";//地点名
+    	arr3[3] = "明月湖的详情简介！！！";//详情
+
+    	var arr = new Array();
+    	arr[0] = arr1;
+    	arr[1] = arr2;
+    	arr[2] = arr3;
+    	var a = document.getElementById("imageFullScreen");
+    	var b = a.parentNode;
+    	var childs = b.childNodes;
+    	var le = childs.length;
+    	if(le >1){
+    		for(var i = le-1; i > 0; i--) {
+    			b.removeChild(childs[i]); 
+    		}
+    	}
+    	for ( var i in arr) {
+	    	var a = arr[i];
+	    	var div = document.createElement("div");
+	    	div.id = a[0]+""+a[1];
+	    	div.style.position = "absolute";
+	    	div.style.textAlign = "center";
+	    	var title = a[2];
+	    	var context = a[3];
+	    	context = "'"+context+"'";
+	    	div.innerHTML = "<span class='lable1' onclick=\"showModal("+ context +")\">"+title+"</span><br><img alt='' src='images/biaozhu.png' style='width: 25px;height: 25px;'>";
+	    	var obj = getXY(a[0],a[1],x,y,t1);
+	     	var x1=obj.x -(title.length*6);
+	    	var y1=obj.y -45;
+	    	div.style.left = x1 + "px";
+	    	div.style.top = y1 + "px"; 
+	    	b.appendChild( div ); 
+		}*/
+        var a = document.getElementById("imageFullScreen");
+        var b = a.parentNode;
+        var childs = b.childNodes;
+        var le = childs.length;
+        if(le >1){
+            for(var i = le-1; i > 0; i--) {
+                b.removeChild(childs[i]);
+            }
+        }
+        for (var i = 0; i < placeList.length; i++) {
+            var place = placeList[i];
+            var div = document.createElement("div");
+            div.id = place.x+""+place.y;
+            div.style.position = "absolute";
+            div.style.textAlign = "center";
+            var id = place.id;
+            var title = place.name+"";
+            var context = place.introdution;
+            context = "'"+context+"'";
+            var link = place.link+"";
+            //console.info(link);
+            div.innerHTML = "<span class='lable1' onclick=\"showModal(\'"+id+"\'\,\'"+title +"\'\,\'" + link+"\'\," + context +")\">"+title+"</span><br><img alt='' src='images/biaozhu.png' style='width: 25px;height: 25px;'>";
+            var obj = getXY(place.x,place.y,x,y,t1);
+            var x1=obj.x -(title.length*6);
+            var y1=obj.y -45;
+            div.style.left = x1 + "px";
+            div.style.top = y1 + "px";
+            b.appendChild( div );
+        }
+    }
+    //获取地点坐标，参数1、参数2为地图0.5倍时的原始坐标
+    function getXY(ox,oy,x,y,t){
+    	var t0 = 0.5;
+    	 if(t > 0.5){
+    		 t0 = t/t0;
+			 x = parseInt(x) + ox*t0;
+			 y = parseInt(y) + oy*t0;
+    	 }else {
+    		 t0 = t0/t;
+			 x = parseInt(x) + ox/t0;
+			 y = parseInt(y) + oy/t0;
+    	 }
+    	 return {x:x,y:y};
+    }
+    function showModal(id,name,link,context){
+        $("#palceModalTitle").text(name);
+		$("#placeContext").text(context);
+		//$("#placeDetail").html("<a href='goPlaceDetail?id="+id+"\'>详情...</a>");
+		if(null  == link || "" == link){
+            $("#placeDetail").html(" ");
+		}else {
+            $("#placeDetail").html("<a href='"+link+"\'>详情...</a>");
+		}
+    	$("#palceModal").modal("show");
+    }
+    
+    function to(id){
+    	var div = document.getElementById(id);
+    	var x = parseInt(div.style.left);
+    	var y = parseInt(div.style.top);
+    	var wx = parseInt(window.innerWidth/2);
+    	var wy = parseInt(window.innerHeight/2);
+    	var a = x - wx;
+    	var b = y - wy;
+    	
+    	var pixelsToMoveOnX = -a;
+        var pixelsToMoveOnY = -b;
+
+    	$('#imageFullScreen').smartZoom('pan', pixelsToMoveOnX, pixelsToMoveOnY); 
+    }
+    /*function selectPlaceShow(){
+    	var dis=$("#placeDiv").css("display");
+    	if(dis=="none"){
+    		$("#placeDiv").show();
+    	}else{
+    		$("#placeDiv").hide();
+    	}
+    }*/
+    function searPlaceModelShow() {
+        $.post(
+            "/getPlaceAjax",
+            {},
+            function(data) {
+                placeList = eval(data);
+            });
+        var ul = document.getElementById("selectPlaceUl");
+        var childs = ul.childNodes;
+        var le = childs.length;
+        if(le >1){
+            for(var i = le-1; i > 0; i--) {
+                ul.removeChild(childs[i]);
+            }
+        }
+        for (var i = 0; i < placeList.length; i++) {
+            var place = placeList[i];
+            var li = document.createElement("li");
+            var id = place.x+""+place.y;
+            var name = place.name;
+            li.innerHTML = "<a onclick=\"to("+ id +")\" data-toggle='modal' data-target='#searPlaceModel'>"+name+"</a>";
+            ul.appendChild( li );
+        }
+    }
+	function selectPlace(){
+		var pstr=$("#placeStr").val();
+		var li=$("#selectPlaceUl").find("li");
+		for (var i = 0; i < li.length; i++) {
+			var cli =li.eq(i);
+			var str=cli.find("a").eq(0).html();
+			if(str.indexOf(pstr)>=0||pstr==null||pstr==""){
+				cli.show();
+			}else{
+				cli.hide();
+			}
+		}
+	}
+</script>
+</body>
+</html>
